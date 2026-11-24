@@ -14,7 +14,7 @@
 </head>
 <body>
 <h1>PulseWalk Privacy Policy</h1>
-<p class="muted">Last updated: 24 November 2026 (v2)</p>
+<p class="muted">Last updated: 24 November 2026 (v3)</p>
 
 <p>PulseWalk ("the app") is published by Synergy ("we", "us"). This policy explains what information the app uses, why, and the choices you have.</p>
 
@@ -36,6 +36,15 @@
 </ul>
 <p>PulseWalk's use of information received from Health Connect adheres to the Health Connect Permissions policy, including the Limited Use requirements.</p>
 
+<h2>2c. Live location sharing (optional)</h2>
+<p>During a walk you can choose to share a live link with people you trust. While sharing is on, your name, location, distance and walking time are stored in our cloud database (Google Firebase) and anyone with the link can view them. Sharing stops automatically when you finish your walk, or when you tap "Stop sharing".</p>
+
+<h2>2d. Heart rate and sleep (optional)</h2>
+<p>If you connect them, PulseWalk reads today's heart rate and the last 24 hours of sleep from Health Connect (for example from a smartwatch). This data is only shown on your phone and is never uploaded, shared or used for advertising.</p>
+
+<h2>2e. Community routes and weather (optional)</h2>
+<p>You can choose to publish one of your walks as a public route. Published routes (route line, distance, name and your first name) are visible to all PulseWalk users; you can delete your routes at any time. To show weather before a walk, your approximate location is sent to Open-Meteo (open-meteo.com) to get the local forecast; we do not store it.</p>
+
 <h2>3. Group events (optional)</h2>
 <p>If you choose to join or create an event with an event code, the following is sent to our cloud database (Google Firebase) while you walk in that event:</p>
 <ul>
@@ -55,7 +64,9 @@
 <ul>
   <li>Google Maps SDK for Android – to display maps.</li>
   <li>Google Play services location – to get your location while recording a walk.</li>
-  <li>Google Firebase (Authentication, Cloud Firestore) – for group events.</li>
+  <li>Google Firebase (Authentication, Cloud Firestore) – for group events, live sharing and community routes.</li>
+  <li>Open-Meteo – weather forecasts.</li>
+  <li>OpenStreetMap / CARTO – map on the live-sharing web page.</li>
 </ul>
 <p>These services are operated by Google and follow <a href="https://policies.google.com/privacy">Google's Privacy Policy</a>.</p>
 

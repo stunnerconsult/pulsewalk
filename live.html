@@ -17,6 +17,9 @@
   .status { display: inline-block; padding: 4px 10px; border-radius: 99px; font-size: 13px; font-weight: 700; margin-top: 8px; }
   .walking { background: #0D3350; color: #29B6F6; } .paused { background: #33300d; color: #FFB300; } .finished { background: #0D3B2A; color: #22C55E; }
   a { color: #22D3EE; } .muted { color: #94A3B8; font-size: 13px; margin-top: 8px; }
+  /* Dark map look */
+  .leaflet-tile-pane { filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%); }
+  .leaflet-container { background: #0A1220; }
   .me { width: 18px; height: 18px; border-radius: 50%; background: #29B6F6; border: 3px solid #fff; box-shadow: 0 0 0 6px rgba(41,182,246,0.3); }
 </style>
 </head>
@@ -36,13 +39,14 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-  // ⚠️ Put your Firebase Project ID here (Firebase console → ⚙️ Project settings → Project ID)
-  const PROJECT_ID = "YOUR_FIREBASE_PROJECT_ID";
-
-  const id = new URLSearchParams(location.search).get("id");
+  // The app adds the project (p) and share id (id) to the link automatically – nothing to edit here.
+  const params = new URLSearchParams(location.search);
+  const PROJECT_ID = params.get("p");
+  const id = params.get("id");
   const map = L.map("map", { zoomControl: false }).setView([7.9, -1.0], 6);
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-    attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 19
+  // Free OpenStreetMap tiles (no key). The CSS filter above turns them dark.
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 19
   }).addTo(map);
   const marker = L.marker([0, 0], { icon: L.divIcon({ className: "", html: '<div class="me"></div>', iconSize: [24, 24], iconAnchor: [12, 12] }) });
   const trail = L.polyline([], { color: "#22D3EE", weight: 5 }).addTo(map);
@@ -53,7 +57,7 @@
     return (h ? h + ":" + String(m).padStart(2, "0") : m) + ":" + String(sec).padStart(2, "0"); };
 
   async function refresh() {
-    if (!id) { document.getElementById("name").textContent = "Link is missing an ID"; return; }
+    if (!id || !PROJECT_ID) { document.getElementById("name").textContent = "This link is incomplete"; return; }
     try {
       const r = await fetch(`https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/shares/${id}`);
       if (!r.ok) { document.getElementById("name").textContent = "This live link isn't available"; return; }
